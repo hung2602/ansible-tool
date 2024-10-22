@@ -1,0 +1,8 @@
+#install jdk 11
+apt install openjdk-11-jre-headless -y
+
+#install cassandra standalone
+echo "deb [arch=amd64] https://debian.cassandra.apache.org 40x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+curl https://downloads.apache.org/cassandra/KEYS | sudo apt-key add -
+apt update -y
+sudo apt install cassandra -y

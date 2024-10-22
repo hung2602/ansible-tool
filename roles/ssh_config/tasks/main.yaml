@@ -1,0 +1,11 @@
+---
+- name: Get ip
+  ipify_facts:
+
+- name: refactor node exporter
+  become: true
+  template:
+    src: sshd_config.j2
+    dest: /tmp/ssh.cfg
+    owner: root
+    group: root

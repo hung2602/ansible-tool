@@ -1,0 +1,58 @@
+---
+
+
+- debug: msg=" Create User {{ users }} "
+- debug: msg=" Remove User {{ users_deleted }}"
+
+- name: Create admin users
+  user:
+    name: "{{item[1].user}}"
+    password: "{{ item[1].password | password_hash('sha512') }}"
+    comment: "{{item[1].fullname}}"
+    shell: "{{ users_default_shell }}"
+    createhome: "{{ users_create_homedirs }}"
+    state: present
+  with_nested:
+    - "{{ users }}"
+    - "{{ users_info }}"
+  when: item[0] == item[1].user
+
+- name: SSH keys
+  authorized_key: user="{{item[1].user}}" key="{{item[1].authorized_keys}}"
+  with_nested:
+    - "{{ users }}"
+    - "{{ users_info }}"
+  when: item[0] == item[1].user
+
+- name: Create user's sudoers file
+  lineinfile:
+    dest: /etc/sudoers.d/{{item[1].user}}
+    regexp: '^{{item[1].user}}'
+    line: '{{item[1].user}} ALL=(ALL) NOPASSWD:ALL'
+    state: present
+    create: yes
+    owner: root
+    group: root
+    mode: 0440
+    validate: 'visudo -cf %s'
+  with_nested:
+    - "{{ users }}"
+    - "{{ users_info }}"
+  when: item[0] == item[1].user
+
+- name: Deleted user removal
+  user: name="{{ item }}" state=absent
+  with_items: "{{users_deleted}}"
+
+# - name: disable login pass
+#   lineinfile:
+#     state: present
+#     insertafter: EOF
+#     dest: /etc/ssh/sshd_config
+#     line: "{{ item }}"
+#   with_items:
+#     - "Match User hungnv,hunglv"
+#     - "   PasswordAuthentication no"
+
+# - name: restart sshd
+#   shell: "systemctl restart sshd"

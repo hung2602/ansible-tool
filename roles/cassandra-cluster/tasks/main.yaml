@@ -1,0 +1,63 @@
+---
+
+- name: Creates directory
+  ansible.builtin.file:
+    path: "{{ dir_ex }}"
+    state: directory
+
+- name: file init
+  template: src=init-cass.sh.j2 dest={{ dir_ex }}/init-cass.sh mode=0777
+
+- name: Execute the script
+  shell: "{{ dir_ex }}/init-cass.sh > {{ dir_ex }}/log_execute_{{ inventory_hostname }}.txt"
+
+- name: Stop cassandra
+  command: systemctl stop cassandra
+
+- name: Get directory listing
+  become: yes
+  find:
+    paths: /var/lib/cassandra/
+    patterns: '*'
+    hidden: yes
+  register: directory_content_result
+
+- name: Clear data
+  become: yes
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ directory_content_result.files }}"
+
+- name: Config cassandra.yaml
+  template: src=cassandra.yaml.j2 dest=/etc/cassandra/cassandra.yaml mode=644
+
+# - name: Start cassandra
+#   command: systemctl start cassandra
+
+- name: Config cassandra-env.sh
+  template: src=cassandra-env.sh.j2 dest=/etc/cassandra/cassandra-env.sh mode=644
+
+- name: Config jmxremote.password
+  template: src=jmxremote.password.j2 dest=/etc/cassandra/jmxremote.password mode=400 owner=cassandra group=cassandra
+
+- name: Config jmxremote.access
+  template: src=jmxremote.access.j2 dest=/etc/cassandra/jmxremote.access mode=400 owner=cassandra group=cassandra
+
+- name: download cassandra-exporter to /usr/share/cassandra/lib/
+  command: curl https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.13.0/jmx_prometheus_javaagent-0.13.0.jar --output /usr/share/cassandra/lib/jmx_prometheus_javaagent-0.13.0.jar
+
+- name: config cassandra exporter
+  template: src=jmx_exporter.yml.j2 dest=/etc/cassandra/jmx_exporter.yml mode=644
+
+- name: Start cassandra
+  command: systemctl start cassandra
+# - name: restart cassandra
+#   command: systemctl restart cassandra
+
+# - name: clean directory exe
+#   ansible.builtin.file:
+#     state: absent
+#     path: "{{ dir_ex }}"
+
+

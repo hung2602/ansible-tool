@@ -1,0 +1,12 @@
+- hosts: worker
+  become: yes
+  roles:
+    - {role: cassandra-cluster, tags: ['cassandra-cluster']}
+    - {role: adduser, tags: ['adduser']}
+    - {role: ssh_config, tags: ['configSSH']}
+    - {role: change-hostname, tags: ['hostname']}
+
+- hosts: host-reaper
+  become: yes
+  roles:
+    - {role: cassandra-reaper, tags: ['cassandra-reaper']}

@@ -1,0 +1,23 @@
+users_create_homedirs: yes
+users_default_shell: /bin/bash
+
+users_deleted: []
+
+users:
+  - hung01
+  - hung02
+  - hung03
+
+users_info:
+  - user: hung01
+    fullname: "Nguyen Van Hung"
+    authorized_keys: ""
+    password: "mS2KjLqlbF313GYA8vKR"
+  - user: hung02
+    fullname: "Nguyen Van Hung"
+    authorized_keys: ""
+    password: "mS2KjLqlbF313GYA8vav"
+  - user: hung03
+    fullname: "Nguyen Van Hung"
+    authorized_keys: ""
+    password: "mS2KjLqlbF313GYA8vrg"

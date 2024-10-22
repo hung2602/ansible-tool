@@ -1,0 +1,9 @@
+dir_ex: /tmp/install-cass
+cluster_name: cluster-vtvlive
+class_name: org.apache.cassandra.locator.SimpleSeedProvider
+seed_node: 10.54.10.164,10.54.10.165
+rpc_address: 0.0.0.0
+endpoint_snitch: GossipingPropertyFileSnitch
+authenticator: org.apache.cassandra.auth.PasswordAuthenticator
+authorizer: org.apache.cassandra.auth.CassandraAuthorizer
+cassandra_jmx_password: sgu8YmpIiCeNVcsJs6Lj

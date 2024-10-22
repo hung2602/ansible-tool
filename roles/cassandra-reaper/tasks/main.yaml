@@ -1,0 +1,35 @@
+---
+
+- name: Creates directory
+  ansible.builtin.file:
+    path: "{{ dir_ex_reaper }}"
+    state: directory
+
+- name: file init install cass reaper
+  template: src=init-cass-reaper.sh.j2 dest={{ dir_ex_reaper }}/init-cass-reaper.sh mode=0777
+
+- name: Execute the script
+  shell: "{{ dir_ex_reaper }}/init-cass-reaper.sh > {{ dir_ex_reaper }}/log_execute_{{ inventory_hostname }}.txt"
+
+- name: Stop cassandra-reaper
+  command: systemctl stop cassandra-reaper
+
+- name: Creates directory storage cassandra-reaper 
+  ansible.builtin.file:
+    path: /var/lib/cassandra-reaper
+    state: directory
+    owner: reaper
+    group: reaper
+    mode: 0775
+
+- name: config cassandra-reaper.yaml
+  template: src=cassandra-reaper.yaml.j2 dest=/etc/cassandra-reaper/cassandra-reaper.yaml mode=644
+
+- name: config shiro.ini
+  template: src=shiro.ini.j2 dest=/etc/cassandra-reaper/shiro.ini mode=644
+  
+- name: config cassandra-reaper service
+  template: src=cassandra-reaper.service.j2 dest=/lib/systemd/system/cassandra-reaper.service mode=644
+
+- name: start cassandra-reaper
+  command: systemctl start cassandra-reaper
