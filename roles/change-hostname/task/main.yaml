@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: worker-postgres-percona
 
   tasks:
     - name: Change the hostname to our standard
@@ -8,13 +8,13 @@
       when:
         ansible_fqdn != ansible_ssh_host
 
-    - name: restart machine
-      command: shutdown -r now "Ansible updates triggered"
-      async: 0
-      poll: 0
-      ignore_errors: True
-      when:
-        reboot is defined
+    # - name: restart machine
+    #   command: shutdown -r now "Ansible updates triggered"
+    #   async: 0
+    #   poll: 0
+    #   ignore_errors: True
+    #   when:
+    #     reboot is defined
 
     # - name: Waiting for server to come back up
     #   local_action: wait_for host="{{ inventory_hostname }}" port=22 state=started
@@ -30,9 +30,9 @@
       when:
         ansible_fqdn != inventory_hostname
 
-    - name: Validate ansible_fqdn == inventory_hostname
-      tags:
-        - validate
-      assert:
-        that:
-          ansible_fqdn == inventory_hostname
+    # - name: Validate ansible_fqdn == inventory_hostname
+    #   tags:
+    #     - validate
+    #   assert:
+    #     that:
+    #       ansible_fqdn == inventory_hostname

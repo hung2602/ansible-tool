@@ -1,0 +1,9 @@
+name: {{ ansible_fqdn }}
+initial-cluster-token: {{ Cluster_Name }}
+initial-cluster-state: new
+initial-cluster: {{ initial_cluster }}
+data-dir: /var/lib/etcd
+initial-advertise-peer-urls: http://{{ ansible_default_ipv4.address }}:2380 
+listen-peer-urls: http://{{ ansible_default_ipv4.address }}:2380
+advertise-client-urls: http://{{ ansible_default_ipv4.address }}:2379
+listen-client-urls: http://{{ ansible_default_ipv4.address }}:2379

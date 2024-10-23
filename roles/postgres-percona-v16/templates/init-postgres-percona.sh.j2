@@ -1,0 +1,15 @@
+wget https://repo.percona.com/apt/percona-release_latest.$(lsb_release -sc)_all.deb && \
+sudo dpkg -i percona-release_latest.$(lsb_release -sc)_all.deb && \ 
+sudo apt update -y && \
+sudo percona-release setup ppg-16 && \
+sudo apt install percona-ppg-server-16 -y && \ 
+sudo apt install percona-patroni \
+etcd etcd-server etcd-client \
+percona-pgbackrest -y && \
+systemctl stop etcd && \
+systemctl stop patroni && \
+systemctl stop postgresql && \
+systemctl disable etcd && \
+systemctl disable patroni && \
+systemctl disable postgresql && \
+rm -rf /var/lib/postgresql/16/main 

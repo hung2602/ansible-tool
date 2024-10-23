@@ -3,9 +3,14 @@
   roles:
     - {role: cassandra-cluster, tags: ['cassandra-cluster']}
     - {role: adduser, tags: ['adduser']}
-    - {role: ssh_config, tags: ['configSSH']}
     - {role: change-hostname, tags: ['hostname']}
 
+- hosts: worker-postgres-percona
+  become: yes
+  roles:
+    - {role: postgres-percona-v16, tags: ['postgres-percona-v16']}
+    - {role: change-hostname, tags: ['hostname-pg']}
+    
 - hosts: host-reaper
   become: yes
   roles:

@@ -3,12 +3,16 @@ master-01 ansible_host=10.54.10.164
 
 [all:vars]
 ansible_user=root
-ansible_ssh_pass=abc
+ansible_ssh_pass="abc"
 ansible_python_interpreter=/usr/bin/python3
 
 [worker]
-cassandra-01 ansible_host=10.54.10.164
-cassandra-02 ansible_host=10.54.10.165
+cassandra-lab-01 ansible_host=10.54.10.164
+cassandra-lab-02 ansible_host=10.54.10.165
 
 [host-reaper]
 host-reaper-01 ansible_host=10.54.10.165
+
+[worker-postgres-percona]
+node1 ansible_host=10.54.10.164
+node2 ansible_host=10.54.10.165
