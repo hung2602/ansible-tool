@@ -1,6 +1,6 @@
 namespace: {{ Cluster_Name }}
 scope: {{ Cluster_Name }}
-name: {{ ansible_fqdn }}
+name: {{ inventory_hostname }}
 
 restapi:
     listen: 0.0.0.0:8008

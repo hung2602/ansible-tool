@@ -1,15 +1,16 @@
-- hosts: worker
+- hosts: worker-cassandra
   become: yes
   roles:
     - {role: cassandra-cluster, tags: ['cassandra-cluster']}
     - {role: adduser, tags: ['adduser']}
-    - {role: change-hostname, tags: ['hostname']}
+    - {role: change-hostname, tags: ['hostname-cass']}
 
 - hosts: worker-postgres-percona
   become: yes
   roles:
     - {role: postgres-percona-v16, tags: ['postgres-percona-v16']}
     - {role: change-hostname, tags: ['hostname-pg']}
+
     
 - hosts: host-reaper
   become: yes

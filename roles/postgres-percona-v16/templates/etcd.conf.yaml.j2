@@ -1,7 +1,10 @@
-name: {{ ansible_fqdn }}
+name: {{ inventory_hostname }}
 initial-cluster-token: {{ Cluster_Name }}
 initial-cluster-state: new
-initial-cluster: {{ initial_cluster }}
+initial-cluster: {% for host in play_hosts %}
+{{ host }}=http://{{ hostvars[host].ansible_host }}:2380{% if not loop.last %},{% endif %}
+{% endfor %}
+
 data-dir: /var/lib/etcd
 initial-advertise-peer-urls: http://{{ ansible_default_ipv4.address }}:2380 
 listen-peer-urls: http://{{ ansible_default_ipv4.address }}:2380

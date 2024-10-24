@@ -6,7 +6,7 @@ ansible_user=root
 ansible_ssh_pass="abc"
 ansible_python_interpreter=/usr/bin/python3
 
-[worker]
+[worker-cassandra]
 cassandra-lab-01 ansible_host=10.54.10.164
 cassandra-lab-02 ansible_host=10.54.10.165
 
