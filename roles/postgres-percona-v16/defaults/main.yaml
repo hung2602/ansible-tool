@@ -1,5 +1,4 @@
 ---
 dir_ex: /tmp/install-pg
 Cluster_Name: cluster_payment
-initial_cluster: node1=http://10.54.10.164:2380,node2=http://10.54.10.165:2380
 password_pg: abc
