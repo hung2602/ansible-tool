@@ -16,3 +16,8 @@
   become: yes
   roles:
     - {role: cassandra-reaper, tags: ['cassandra-reaper']}
+
+- hosts: host-postgres-exporter
+  become: yes
+  roles:
+    - {role: postgres-exporter, tags: ['postgres-exporter']}
