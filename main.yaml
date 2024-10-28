@@ -25,7 +25,7 @@
 - hosts: host-mongodb-service
   become: yes
   roles:
-    - {role: mongodb-service, tags: ['mongodb-service']}
+    - {role: mongodb, tags: ['mongodb']}
     - {role: mongodb-exporter, tags: ['mongodb-exporter']}
 
 
