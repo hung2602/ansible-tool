@@ -21,3 +21,10 @@
   become: yes
   roles:
     - {role: postgres-exporter, tags: ['postgres-exporter']}
+
+- hosts: host-mongodb-service
+  become: yes
+  roles:
+    - {role: mongodb-service, tags: ['mongodb-service']}
+
+
