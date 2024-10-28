@@ -1,0 +1,28 @@
+--- 
+- name: Creates directory
+  ansible.builtin.file:
+    path: "{{ dir_ex }}"
+    state: directory
+- name: file init
+  template: src=postgres-exporter-repo.sh.j2 dest={{ dir_ex }}/postgres-exporter-repo.sh mode=0777
+
+- name: Creat Directory Postgres Exporter
+  shell: "{{ dir_ex }}/postgres-exporter-repo.sh > {{ dir_ex }}/log_execute_{{ inventory_hostname }}.txt"
+
+- name: Config postgres_exporter.env
+  template: src=postgres-exporter.env.j2 dest={{ dir_ex }}/postgres_exporter.env mode=744
+
+- name: Config queries.yaml
+  template: src=queries.yaml.j2 dest={{ dir_ex }}/queries.yaml mode=744
+
+- name: Config postgres_exporter.service
+  template: src=postgres_exporter.service.j2 dest=/etc/systemd/system/postgres_exporter.service mode=744
+
+- name: Start postgres_exporter
+  command: systemctl daemon-reload
+
+- name: Enable postgres_exporter
+  command: systemctl enable --now postgres_exporter
+
+
+
