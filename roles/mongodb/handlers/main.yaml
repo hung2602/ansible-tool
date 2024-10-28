@@ -1,0 +1,5 @@
+---
+- name: Restart mongod.service
+  systemd:
+    name: mongod.service
+    state: restarted

@@ -1,0 +1,14 @@
+--- 
+- name: Creates directory
+  ansible.builtin.file:
+    path: "{{ dir_ex }}"
+    state: directory
+
+- name: Creat Directory Mongodb Service
+  shell: "{{ dir_ex }}/mongodb-repo.sh > {{ dir_ex }}/log_execute_{{ inventory_hostname }}.txt"
+
+- name: Enable mongodb service
+  command: systemctl enable --now mongod.service
+
+- name: Restart Mongodb 
+  command: systemctl restart mongod.service 
