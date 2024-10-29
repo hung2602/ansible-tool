@@ -24,6 +24,8 @@ bootstrap:
       use_pg_rewind: true
       use_slots: true
       parameters:
+        archive_mode: true
+        shared_preload_libraries: pg_stat_statements
         max_connections: 1000
         wal_level: replica
         hot_standby: on
