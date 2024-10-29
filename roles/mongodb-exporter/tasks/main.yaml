@@ -10,26 +10,8 @@
 - name: Creat Directory Mongodb Exporter
   shell: "{{ dir_ex }}/mongodb_exporter.sh > {{ dir_ex }}/log_execute_{{ inventory_hostname }}.txt"
 
-- name: Create MongoDB User with Specific Roles
-  tasks:
-    - name: Create user with clusterMonitor role on admin database
-      mongodb_user:
-        login_user: monitor
-        login_password: vtvlive2024
-        database: admin
-        roles:
-          - clusterMonitor
-
-    - name: Grant read role on local database
-      mongodb_user:
-        login_user: monitor
-        login_password: vtvlive2024
-        database: local
-        roles:
-          - read
-          
 - name: Config mongodb_exporter.service
-  template: src=mongodb_exporter.service.j2 dest=/etc/systemd/system/mongodb_exporter.service mode=744
+  template: src=mongodb_exporter.service.j2 dest=/lib/systemd/system/mongodb_exporter.service mode=744
 
 - name: Start mongodb_exporter
   command: systemctl daemon-reload

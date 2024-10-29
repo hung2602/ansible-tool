@@ -4,7 +4,7 @@ Description=MongoDB Exporter
 Type=simple
 Restart=always
 ExecStart=/usr/local/bin/mongodb_exporter \
-        --mongodb.uri={% for ansible_host in play_hosts %}"mongodb://monitor:vtvlive2024@{{ hostvars[host].ansible_host }}:27017{% if not loop.last %},{% endif %}{% endfor %}/?authSource=admin&replicaSet=rs0" \
+        --mongodb.uri="mongodb://monitor:vtvlive2024@{% for host in play_hosts %}{{ hostvars[host].ansible_host }}:27017{% if not loop.last %},{% endif %}{% endfor %}/?authSource=admin&replicaSet=rs0" \
         --collect-all \
         --compatible-mode
 [Install]
