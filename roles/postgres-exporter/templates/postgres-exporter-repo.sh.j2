@@ -1,0 +1,6 @@
+cd /opt/postgres_exporter && \
+wget https://github.com/prometheus-community/postgres_exporter/releases/download/v0.15.0/postgres_exporter-0.15.0.linux-amd64.tar.gz && \
+tar -xvzf postgres_exporter-0.15.0.linux-amd64.tar.gz && \
+cp postgres_exporter-0.15.0.linux-amd64/postgres_exporter /usr/local/bin && \
+sudo -u postgres bash -c "psql -c \"CREATE USER pgexporter WITH PASSWORD 'vtvlive2024';\"" && \
+sudo -u postgres bash -c "psql -c \"ALTER ROLE pgexporter WITH superuser createrole createdb replication bypassrls ;\""
