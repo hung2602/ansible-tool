@@ -26,7 +26,6 @@
   become: yes
   roles:
     - {role: mongodb, tags: ['mongodb']}
-    - {role: mongodb-exporter, tags: ['mongodb-exporter']}
 
 
 

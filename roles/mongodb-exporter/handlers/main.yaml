@@ -1,5 +1,0 @@
----
-- name: Restart mongodb_exporter
-  systemd:
-    name: mongodb_exporter
-    state: restarted
