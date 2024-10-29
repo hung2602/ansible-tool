@@ -20,8 +20,10 @@ node2 ansible_host=10.54.10.165
 [host-postgres-exporter]
 host-postgres-exporter-01 ansible_host=10.54.10.164
 
-
 [host-mongodb-service]
 host-mongodb-service-01 ansible_host=10.54.10.164
 host-mongodb-service-02 ansible_host=10.54.10.165
 
+[worker-adduser]
+node-lab-01 ansible_host=10.54.10.164
+node-lab-02 ansible_host=10.54.10.165
