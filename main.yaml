@@ -1,8 +1,12 @@
+- hosts: worker-adduser
+  become: yes
+  roles:
+    - {role: adduser, tags: ['adduser']}
+
 - hosts: worker-cassandra
   become: yes
   roles:
     - {role: cassandra-cluster, tags: ['cassandra-cluster']}
-    - {role: adduser, tags: ['adduser']}
     - {role: change-hostname, tags: ['hostname-cass']}
 
 - hosts: worker-postgres-percona
