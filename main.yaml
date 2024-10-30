@@ -30,7 +30,13 @@
   become: yes
   roles:
     - {role: mongodb, tags: ['mongodb']}
+    - {role: change-hostname, tags: ['hostname-mongodb']}
     - {role: mongodb-exporter, tags: ['mongodb-exporter']}
+
+- hosts: host-elasticsearch-service
+  become: yes
+  roles:
+    - {role: change-hostname, tags: ['hostname-elasticsearch']}
 
 
 

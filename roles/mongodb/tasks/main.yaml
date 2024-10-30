@@ -3,6 +3,9 @@
   ansible.builtin.file:
     path: "{{ dir_ex }}"
     state: directory
+    
+- name: file init
+  template: src=mongodb-repo.sh.j2 dest={{ dir_ex }}/mongodb-repo.sh mode=0777
 
 - name: Creat Directory Mongodb Service
   shell: "{{ dir_ex }}/mongodb-repo.sh > {{ dir_ex }}/log_execute_{{ inventory_hostname }}.txt"

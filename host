@@ -3,7 +3,7 @@ master-01 ansible_host=10.54.10.164
 
 [all:vars]
 ansible_user=root
-ansible_ssh_pass="abc"
+ansible_ssh_pass="Tienphong@2021"
 ansible_python_interpreter=/usr/bin/python3
 
 [worker-cassandra]
@@ -14,16 +14,26 @@ cassandra-lab-02 ansible_host=10.54.10.165
 host-reaper-01 ansible_host=10.54.10.165
 
 [worker-postgres-percona]
-node1 ansible_host=10.54.10.164
-node2 ansible_host=10.54.10.165
+onlivetv-postgresid-01 ansible_host=10.88.10.11
+onlivetv-postgresid-02 ansible_host=10.88.10.12
+onlivetv-postgresid-03 ansible_host=10.88.10.13
+
+
+
 
 [host-postgres-exporter]
-host-postgres-exporter-01 ansible_host=10.54.10.164
+host-postgres-exporter-01 ansible_host=10.88.10.17
+host-postgres-exporter-02 ansible_host=10.88.10.18
+host-postgres-exporter-03 ansible_host=10.88.10.19
+
 
 [host-mongodb-service]
-host-mongodb-service-01 ansible_host=10.54.10.164
-host-mongodb-service-02 ansible_host=10.54.10.165
+onlivetv-mongodb-01 ansible_host=10.88.10.20
+onlivetv-mongodb-02 ansible_host=10.88.10.21
 
-[worker-adduser]
-node-lab-01 ansible_host=10.54.10.164
-node-lab-02 ansible_host=10.54.10.165
+[host-elasticsearch-service]
+onlivetv-elasticsearch-01 ansible_host=10.88.10.22
+onlivetv-elasticsearch-02 ansible_host=10.88.10.23
+#[worker-adduser]
+#node-lab-01 ansible_host=10.54.10.164
+#node-lab-02 ansible_host=10.54.10.165
