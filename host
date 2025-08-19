@@ -37,3 +37,8 @@ onlivetv-elasticsearch-02 ansible_host=10.88.10.23
 #[worker-adduser]
 #node-lab-01 ansible_host=10.54.10.164
 #node-lab-02 ansible_host=10.54.10.165
+
+[mysql]
+mysql-db1 ansible_host=10.53.10.240
+mysql-db2 ansible_host=10.53.10.241
+mysql-db3 ansible_host=10.53.10.242

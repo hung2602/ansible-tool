@@ -1,0 +1,21 @@
+---
+
+- name: Creates directory
+  ansible.builtin.file:
+    path: "{{ dir_ex }}"
+    state: directory
+
+- name: file init
+  template: src=init-mysql.sh.j2 dest={{ dir_ex }}/init-mysql.sh mode=0777
+
+- name: config mysql
+  template: src=my.cnf-01.j2 dest=/etc/my.cnf
+
+- name: start mysql
+  command: systemctl enable --now mysql
+
+- name: reconfig mysql
+  template: src=my.cnf-02.j2 dest=/etc/my.cnf
+
+- name: start mysql
+  command: systemctl restart mysql

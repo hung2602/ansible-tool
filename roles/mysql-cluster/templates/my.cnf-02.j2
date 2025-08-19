@@ -1,0 +1,59 @@
+#####################
+#Replication + binlog settings
+#####################
+[mysqld]
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+
+log-error=/var/log/mysqld.log
+pid-file=/var/run/mysqld/mysqld.pid
+server-id={{ groups['mysql'].index(inventory_hostname) + 1 }}
+bind-address= 0.0.0.0
+mysqlx-bind-address=0.0.0.0
+
+auto-increment-increment=1
+auto-increment-offset=1
+
+log-bin=/var/lib/mysql/mysql-bin
+log-bin-index=binlog.index
+binlog-checksum=NONE
+binlog-format=ROW
+binlog-row-image=FULL
+log-slave-updates=1
+binlog-transaction-dependency-tracking=WRITESET_SESSION
+
+enforce-gtid-consistency=TRUE
+gtid-mode=ON
+
+master-info-file=master.info
+master-info-repository=TABLE
+relay_log_info_repository=TABLE
+relay-log=/var/lib/mysql/relay-log
+
+sync-binlog=1
+
+### SLAVE SECTION
+skip-slave-start
+slave-parallel-type=LOGICAL_CLOCK
+slave-parallel-workers=4
+slave-preserve-commit-order=1
+
+
+######################################
+#Group Replication
+######################################
+plugin_load_add='group_replication.so'
+plugin-load-add='mysql_clone.so'
+group_replication_group_name ='bf30869c-02e1-4b0c-9b14-fca31c4a4a9e'
+group_replication_start_on_boot=off
+group_replication_local_address="{{ ansible_default_ipv4.address }}:33061"
+group_replication_group_seeds="{% for host in play_hosts %}
+{{ hostvars[host].ansible_host }}:33061{% if not loop.last %},{% endif %}
+{% endfor %}"
+group_replication_bootstrap_group=off
+transaction-write-set-extraction=XXHASH64
+#auto start group after restart
+group_replication_start_on_boot=ON
+#enable ssl group
+group_replication_ssl_mode = REQUIRED
+group_replication_recovery_use_ssl = ON
