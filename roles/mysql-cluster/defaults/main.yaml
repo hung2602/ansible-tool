@@ -1,3 +1,5 @@
 ---
 dir_ex: /tmp/install-mysql
 Cluster_Name: cluster_mysql
+replica_user: replica
+replica_password: 'replica@2025'
