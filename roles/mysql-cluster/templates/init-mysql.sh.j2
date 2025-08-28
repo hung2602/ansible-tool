@@ -1,10 +1,10 @@
-yum install gnupg2 curl -y && \
-yum -y install epel-release && \
-yum install -y https://repo.percona.com/yum/percona-release-latest.noarch.rpm && \
+export DEBIAN_FRONTEND=noninteractive
+apt update -y && \
+apt install curl -y && \
+curl -O https://repo.percona.com/apt/percona-release_latest.generic_all.deb && \
+apt install -y gnupg2 lsb-release ./percona-release_latest.generic_all.deb && \
+apt update -y && \
 yes | percona-release setup pdps-8.0.28 && \
-dnf module disable mysql -y && \
-dnf clean all && \
-dnf makecache && \
-yum install percona-server-server -y && \
-yum install percona-xtrabackup-80 -y && \
-yum install percona-orchestrator -y
+apt install percona-server-server -y && \
+apt install percona-xtrabackup-80 -y && \
+apt install percona-orchestrator -y

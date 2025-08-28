@@ -24,3 +24,5 @@ ansible-playbook main.yaml -i host -t mongodb
 #install mongodb-exporter
 ansible-playbook main.yaml -i host -t mongodb-exporter
 
+#install mysql-cluster
+ansible-playbook main.yaml -i host -t mysql --limit mysql

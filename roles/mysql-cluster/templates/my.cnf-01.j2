@@ -2,11 +2,11 @@
 #Replication + binlog settings
 #####################
 [mysqld]
-datadir=/var/lib/mysql
-socket=/var/lib/mysql/mysql.sock
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+datadir         = /var/lib/mysql
+log-error       = /var/log/mysql/error.log
 
-log-error=/var/log/mysqld.log
-pid-file=/var/run/mysqld/mysqld.pid
 server-id={{ groups['mysql'].index(inventory_hostname) + 1 }}
 bind-address= 0.0.0.0
 mysqlx-bind-address=0.0.0.0

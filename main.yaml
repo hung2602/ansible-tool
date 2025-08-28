@@ -38,5 +38,7 @@
   roles:
     - {role: change-hostname, tags: ['hostname-elasticsearch']}
 
-
-
+- hosts: mysql
+  become: yes
+  roles:
+    - {role: mysql-cluster, tags: ['mysql']}

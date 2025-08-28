@@ -1,0 +1,9 @@
+SET GLOBAL super_read_only=OFF;
+SET SQL_LOG_BIN=0;
+ CREATE USER replica@'%' IDENTIFIED WITH mysql_native_password BY 'replica@2025';  
+ GRANT REPLICATION SLAVE ON *.* TO replica@'%';
+ FLUSH PRIVILEGES;
+ SET SQL_LOG_BIN=1;
+
+CHANGE MASTER TO MASTER_USER='replica', MASTER_PASSWORD='replica@2025' FOR CHANNEL 'group_replication_recovery';
+SET GLOBAL super_read_only=ON;

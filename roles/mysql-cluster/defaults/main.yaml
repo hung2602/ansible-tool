@@ -1,4 +1,3 @@
 ---
-dir_ex: /tmp/install-pg
+dir_ex: /tmp/install-mysql
 Cluster_Name: cluster_mysql
-password_mysql_admin: Vdy1iNbEyZ3Rw1YEN2uf

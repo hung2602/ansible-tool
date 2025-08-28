@@ -8,14 +8,35 @@
 - name: file init
   template: src=init-mysql.sh.j2 dest={{ dir_ex }}/init-mysql.sh mode=0777
 
+- name: Execute the script
+  shell: "{{ dir_ex }}/init-mysql.sh > {{ dir_ex }}/log_execute_{{ inventory_hostname }}.txt"
+
 - name: config mysql
-  template: src=my.cnf-01.j2 dest=/etc/my.cnf
+  template: src=my.cnf-01.j2 dest=/etc/mysql/mysql.conf.d/mysqld.cnf
 
 - name: start mysql
-  command: systemctl enable --now mysql
+  command: systemctl start --now mysql
 
 - name: reconfig mysql
-  template: src=my.cnf-02.j2 dest=/etc/my.cnf
+  template: src=my.cnf-02.j2 dest=/etc/mysql/mysql.conf.d/mysqld.cnf
 
 - name: start mysql
   command: systemctl restart mysql
+
+- name: init sql script
+  template: src=setup-cluster.sql.j2 dest={{ dir_ex }}/setup-cluster.sql mode=0777
+
+- name: run sql script
+  shell: "mysql -u root < {{ dir_ex }}/setup-cluster.sql"
+
+- name: Run sql for primary node
+  shell: mysql -u root -e "SET GLOBAL group_replication_bootstrap_group=ON; START GROUP_REPLICATION; SET GLOBAL group_replication_bootstrap_group=OFF;"
+  when: inventory_hostname == "mysql-db1"
+
+- name: Run sql for secondary node 2
+  shell: mysql -u root -e "START GROUP_REPLICATION;"
+  when: inventory_hostname == "mysql-db2"
+
+- name: Run sql for secondary node 3
+  shell: mysql -u root -e "START GROUP_REPLICATION;"
+  when: inventory_hostname == "mysql-db3"
