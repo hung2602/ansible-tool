@@ -18,14 +18,10 @@ onlivetv-postgresid-01 ansible_host=10.88.10.11
 onlivetv-postgresid-02 ansible_host=10.88.10.12
 onlivetv-postgresid-03 ansible_host=10.88.10.13
 
-
-
-
 [host-postgres-exporter]
 host-postgres-exporter-01 ansible_host=10.88.10.17
 host-postgres-exporter-02 ansible_host=10.88.10.18
 host-postgres-exporter-03 ansible_host=10.88.10.19
-
 
 [host-mongodb-service]
 onlivetv-mongodb-01 ansible_host=10.88.10.20
