@@ -63,8 +63,8 @@ postgresql:
     cluster_name: cluster_1
     listen: 0.0.0.0:5432
     connect_address: {{ ansible_default_ipv4.address }}:5432
-    data_dir: /var/lib/postgresql/16/main
-    bin_dir: /usr/lib/postgresql/16/bin
+    data_dir: /var/lib/postgresql/18/main
+    bin_dir: /usr/lib/postgresql/18/bin
     pgpass: /tmp/pgpass
     authentication:
         replication:

@@ -1,0 +1,24 @@
+---
+
+- name: Creates directory
+  ansible.builtin.file:
+    path: "{{ dir_ex }}"
+    state: directory
+
+- name: file init
+  template: src=init-postgres-percona.sh.j2 dest={{ dir_ex }}/init-postgres-percona.sh mode=0777
+
+- name: Execute the script
+  shell: "{{ dir_ex }}/init-postgres-percona.sh > {{ dir_ex }}/log_execute_{{ inventory_hostname }}.txt"
+
+- name: Config etcd.conf.yaml
+  template: src=etcd.conf.yaml.j2 dest=/etc/etcd/etcd.conf.yaml mode=644
+
+- name: Start etcd
+  command: systemctl enable --now etcd
+
+- name: Config patroni.yml
+  template: src=patroni.yml.j2 dest=/etc/patroni/patroni.yml mode=644
+
+- name: Start patroni
+  command: systemctl enable --now patroni
