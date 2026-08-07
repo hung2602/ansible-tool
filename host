@@ -3,7 +3,7 @@ master-01 ansible_host=10.54.10.164
 
 [all:vars]
 ansible_user=root
-ansible_ssh_pass="Tienphong@2021"
+ansible_ssh_pass="vtc@123"
 ansible_python_interpreter=/usr/bin/python3
 
 [worker-cassandra]
@@ -14,9 +14,9 @@ cassandra-lab-02 ansible_host=10.54.10.165
 host-reaper-01 ansible_host=10.54.10.165
 
 [worker-postgres-percona]
-onlivetv-postgresid-01 ansible_host=10.88.10.11
-onlivetv-postgresid-02 ansible_host=10.88.10.12
-onlivetv-postgresid-03 ansible_host=10.88.10.13
+test-pg-01 ansible_host=192.168.99.70
+test-pg-02 ansible_host=192.168.99.71
+test-pg-03 ansible_host=192.168.99.72
 
 [host-postgres-exporter]
 host-postgres-exporter-01 ansible_host=10.88.10.17
