@@ -1,2 +1,5 @@
 ---
 dir_ex: /opt/postgres_exporter
+postgres_exporter_version: 0.20.1
+postgres_exporter_username: pgexporter
+postgres_exporter_password: vtco2026

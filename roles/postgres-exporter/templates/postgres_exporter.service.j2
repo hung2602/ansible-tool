@@ -8,7 +8,7 @@ User=postgres
 Group=postgres
 WorkingDirectory=/opt/postgres_exporter
 EnvironmentFile=/opt/postgres_exporter/postgres_exporter.env
-ExecStart=/usr/local/bin/postgres_exporter --web.listen-address=:9187 --web.telemetry-path=/metrics
+ExecStart=/usr/local/bin/postgres_exporter --config.file={{ dir_ex }}/postgres_exporter.yml --web.listen-address=:9187 --web.telemetry-path=/metrics
 Restart=always
 [Install]
 WantedBy=multi-user.target

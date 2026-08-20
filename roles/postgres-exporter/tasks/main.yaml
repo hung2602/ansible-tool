@@ -1,28 +1,72 @@
---- 
-- name: Creates directory
+---
+- name: Create postgres_exporter directory
   ansible.builtin.file:
     path: "{{ dir_ex }}"
     state: directory
-- name: file init
-  template: src=postgres-exporter-repo.sh.j2 dest={{ dir_ex }}/postgres-exporter-repo.sh mode=0777
+    owner: root
+    group: root
+    mode: '0755'
 
-- name: Creat Directory Postgres Exporter
-  shell: "{{ dir_ex }}/postgres-exporter-repo.sh > {{ dir_ex }}/log_execute_{{ inventory_hostname }}.txt"
+- name: Download postgres_exporter archive
+  ansible.builtin.get_url:
+    url: "https://github.com/prometheus-community/postgres_exporter/releases/download/v{{ postgres_exporter_version }}/postgres_exporter-{{ postgres_exporter_version }}.linux-amd64.tar.gz"
+    dest: "{{ dir_ex }}/postgres_exporter-{{ postgres_exporter_version }}.linux-amd64.tar.gz"
+    owner: root
+    group: root
+    mode: '0644'
 
-- name: Config postgres_exporter.env
-  template: src=postgres-exporter.env.j2 dest={{ dir_ex }}/postgres_exporter.env mode=744
+- name: Extract postgres_exporter archive
+  ansible.builtin.unarchive:
+    src: "{{ dir_ex }}/postgres_exporter-{{ postgres_exporter_version }}.linux-amd64.tar.gz"
+    dest: "{{ dir_ex }}"
+    remote_src: true
+    creates: "{{ dir_ex }}/postgres_exporter-{{ postgres_exporter_version }}.linux-amd64/postgres_exporter"
+    owner: root
+    group: root
 
-- name: Config queries.yaml
-  template: src=queries.yaml.j2 dest={{ dir_ex }}/queries.yaml mode=744
+- name: Install postgres_exporter binary
+  ansible.builtin.copy:
+    src: "{{ dir_ex }}/postgres_exporter-{{ postgres_exporter_version }}.linux-amd64/postgres_exporter"
+    dest: /usr/local/bin/postgres_exporter
+    remote_src: true
+    owner: root
+    group: root
+    mode: '0755'
+  notify: Restart postgres_exporter
 
-- name: Config postgres_exporter.service
-  template: src=postgres_exporter.service.j2 dest=/etc/systemd/system/postgres_exporter.service mode=744
+- name: Configure postgres_exporter environment
+  ansible.builtin.template:
+    src: postgres-exporter.env.j2
+    dest: "{{ dir_ex }}/postgres_exporter.env"
+    owner: postgres
+    group: postgres
+    mode: '0640'
+  notify: Restart postgres_exporter
 
-- name: Start postgres_exporter
-  command: systemctl daemon-reload
+- name: Config postgres_exporter.yml
+  ansible.builtin.template:
+    src: postgres_exporter.yml.j2
+    dest: "{{ dir_ex }}/postgres_exporter.yml"
+    owner: postgres
+    group: postgres
+    mode: '0640'
+  notify: Restart postgres_exporter
 
-- name: Enable postgres_exporter
-  command: systemctl enable --now postgres_exporter
+- name: Configure postgres_exporter systemd service
+  ansible.builtin.template:
+    src: postgres_exporter.service.j2
+    dest: /etc/systemd/system/postgres_exporter.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart postgres_exporter
+
+- name: Enable and start postgres_exporter
+  ansible.builtin.systemd:
+    name: postgres_exporter
+    enabled: true
+    state: started
+    daemon_reload: true
 
 
 
