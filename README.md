@@ -13,8 +13,8 @@ ansible-playbook main.yaml -i host -t cassandra-reaper --limit host-reaper
 ansible-playbook main.yaml -i host -t adduser --limit worker-adduser
 
 ##install postgres percona
-ansible-playbook main.yaml -i host -t hostname-pg --limit worker-postgres-percona
-ansible-playbook main.yaml -i host -t postgres-percona-v16 --limit worker-postgres-percona
+ansible-playbook main.yaml -i host -t hostname-pg --limit worker-postgres-percona --ask-become-pass
+ansible-playbook main.yaml -i host -t postgres-percona-v16 --limit worker-postgres-percona --ask-become-pass
 
 ##install postgres-exporter
 ansible-playbook main.yaml -i host -t postgres-exporter --limit host-postgres-exporter
