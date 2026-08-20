@@ -1,0 +1,12 @@
+---
+dir_ex: /tmp/install-pg
+Cluster_Name: cluster_math
+password_pg: 0jvpL6psnr3eeAD5ljm4
+
+postgresql_version: "18"
+postgresql_data_dir: "/var/lib/postgresql/{{ postgresql_version }}/main"
+postgresql_bin_dir: "/usr/lib/postgresql/{{ postgresql_version }}/bin"
+percona_release_channel: "ppg-{{ postgresql_version }}"
+percona_postgresql_packages:
+  - "percona-postgresql-{{ postgresql_version }}"
+  - "percona-postgresql-{{ postgresql_version }}-wal2json"

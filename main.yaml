@@ -12,7 +12,7 @@
 - hosts: worker-postgres-percona
   become: yes
   roles:
-    - {role: postgres-percona-v18, tags: ['postgres-percona-v18']}
+    - {role: postgres-percona, tags: ['postgres-percona']}
     - {role: change-hostname, tags: ['hostname-pg']}
 
     
