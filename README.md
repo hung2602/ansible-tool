@@ -24,18 +24,12 @@ ansible-playbook main.yaml -i host -t cassandra-reaper --limit host-reaper
 ansible-playbook main.yaml -i host -t adduser --limit worker-adduser
 ```
 
-<<<<<<< Updated upstream
-##install postgres percona
-ansible-playbook main.yaml -i host -t hostname-pg --limit worker-postgres-percona --ask-become-pass
-ansible-playbook main.yaml -i host -t postgres-percona-v16 --limit worker-postgres-percona --ask-become-pass
-=======
 ## Install Percona PostgreSQL
 
 ```bash
 ansible-playbook main.yaml -i host -t hostname-pg --limit worker-postgres-percona
 ansible-playbook main.yaml -i host -t postgres-percona-v16 --limit worker-postgres-percona
 ```
->>>>>>> Stashed changes
 
 ## Install postgres_exporter
 
@@ -59,13 +53,8 @@ ansible-playbook main.yaml -i host -t mongodb --limit host-mongodb-service
 ansible-playbook main.yaml -i host -t mongodb-exporter --limit host-mongodb-service
 ```
 
-<<<<<<< Updated upstream
-##install mysql-cluster
-ansible-playbook main.yaml -i host -t mysql --limit mysql
-=======
 ## Install MySQL cluster
 
 ```bash
 ansible-playbook main.yaml -i host -t mysql --limit mysql
 ```
->>>>>>> Stashed changes
