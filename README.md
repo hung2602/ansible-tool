@@ -28,7 +28,8 @@ ansible-playbook main.yaml -i host -t adduser --limit worker-adduser
 
 ```bash
 ansible-playbook main.yaml -i host -t hostname-pg --limit worker-postgres-percona
-ansible-playbook main.yaml -i host -t postgres-percona-v16 --limit worker-postgres-percona
+# Default: install PostgreSQL 18. Override the version when needed.
+ansible-playbook main.yaml -i host -t postgres-percona --limit worker-postgres-percona -e postgresql_version=17 -e Cluster_Name=cluster_math -e password_pg=0jvpL6psnr3eeAD5ljm4
 ```
 
 ## Install postgres_exporter
